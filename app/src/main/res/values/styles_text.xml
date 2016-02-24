@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textColorLight">#FFFFFF</color>
+    <color name="textColorDark">#A0000000</color>
+    <color name="textColorSemiDark">#70000000</color>
+    <color name="textColorError">@color/colorDanger</color>
+    <color name="textColorPrimary">@color/colorPrimary</color>
+    <color name="textColorWarning">@color/colorWarning</color>
+
+    <dimen name="font_xxs">9sp</dimen>
+    <dimen name="font_xs">12sp</dimen>
+    <dimen name="font_s">14sp</dimen>
+    <dimen name="font_m">17sp</dimen>
+    <dimen name="font_l">22sp</dimen>
+    <dimen name="font_title">35sp</dimen>
+
+    <style name="Text">
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="Text.Title" parent="Text">
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:textSize">@dimen/font_title</item>
+    </style>
+    <style name="Text.Large" parent="Text">
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:textSize">@dimen/font_l</item>
+    </style>
+    <style name="Text.Medium" parent="Text">
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:textSize">@dimen/font_m</item>
+    </style>
+    <style name="Text.Small" parent="Text">
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:textSize">@dimen/font_s</item>
+    </style>
+    <style name="Text.ExtraSmall" parent="Text">
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+    </style>
+
+    <style name="Text.Title.Light" parent="Text.Title">
+        <item name="android:textColor">@color/textColorLight</item>
+    </style>
+    <style name="Text.Large.Light" parent="Text.Large">
+        <item name="android:textColor">@color/textColorLight</item>
+    </style>
+    <style name="Text.Medium.Light" parent="Text.Medium">
+        <item name="android:textColor">@color/textColorLight</item>
+    </style>
+    <style name="Text.Small.Light" parent="Text.Small">
+        <item name="android:textColor">@color/textColorLight</item>
+    </style>
+    <style name="Text.ExtraSmall.Light" parent="Text.ExtraSmall">
+        <item name="android:textColor">@color/textColorLight</item>
+    </style>
+
+    <style name="Text.Title.Muted" parent="Text.Title">
+        <item name="android:textColor">@color/textColorSemiDark</item>
+    </style>
+    <style name="Text.Large.Muted" parent="Text.Large">
+        <item name="android:textColor">@color/textColorSemiDark</item>
+    </style>
+    <style name="Text.Medium.Muted" parent="Text.Medium">
+        <item name="android:textColor">@color/textColorSemiDark</item>
+    </style>
+    <style name="Text.Small.Muted" parent="Text.Small">
+        <item name="android:textColor">@color/textColorSemiDark</item>
+    </style>
+    <style name="Text.ExtraSmall.Muted" parent="Text.ExtraSmall">
+        <item name="android:textColor">@color/textColorSemiDark</item>
+    </style>
+
+    <style name="Text.Title.Error" parent="Text.Title">
+        <item name="android:textColor">@color/textColorError</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Large.Error" parent="Text.Large">
+        <item name="android:textColor">@color/textColorError</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Medium.Error" parent="Text.Medium">
+        <item name="android:textColor">@color/textColorError</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Small.Error" parent="Text.Small">
+        <item name="android:textColor">@color/textColorError</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.ExtraSmall.Error" parent="Text.ExtraSmall">
+        <item name="android:textColor">@color/textColorError</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Text.Title.Primary" parent="Text.Title">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Large.Primary" parent="Text.Large">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Medium.Primary" parent="Text.Medium">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Small.Primary" parent="Text.Small">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.ExtraSmall.Primary" parent="Text.ExtraSmall">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Text.Title.Warning" parent="Text.Title">
+        <item name="android:textColor">@color/textColorWarning</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Large.Warning" parent="Text.Large">
+        <item name="android:textColor">@color/textColorWarning</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Medium.Warning" parent="Text.Medium">
+        <item name="android:textColor">@color/textColorWarning</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.Small.Warning" parent="Text.Small">
+        <item name="android:textColor">@color/textColorWarning</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.ExtraSmall.Warning" parent="Text.ExtraSmall">
+        <item name="android:textColor">@color/textColorWarning</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+</resources>

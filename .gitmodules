@@ -1,0 +1,3 @@
+[submodule "android-helper"]
+	path = android-helper
+	url = git@github.com:rickyngk/android-helper.git
