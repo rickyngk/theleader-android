@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.theleader.app.R;
 import com.theleader.app.activity.main.fragments.DashboardFragment;
+import com.theleader.app.activity.main.fragments.EmployeeFragment;
 
 import R.helper.BaseActivity;
 import R.helper.BaseFragment;
@@ -113,9 +114,6 @@ public class MainActivity extends BaseActivity {
          * number.
          */
         public static Fragment newInstance(int sectionNumber) {
-            if (sectionNumber == 1) {
-                return BaseFragment.newInstance(DashboardFragment.class);
-            }
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -150,8 +148,11 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            if (position == 0) {
+                return BaseFragment.newInstance(DashboardFragment.class);
+            } else if (position == 2) {
+                return BaseFragment.newInstance(EmployeeFragment.class);
+            }
             return PlaceholderFragment.newInstance(position + 1);
         }
 
