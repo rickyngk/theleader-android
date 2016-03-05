@@ -13,16 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.theleader.app.R;
 import com.theleader.app.activity.main.fragments.DashboardFragment;
 import com.theleader.app.activity.main.fragments.EmployeeFragment;
+import com.theleader.app.activity.main.fragments.FeedbackFragment;
 
 import R.helper.BaseActivity;
 import R.helper.BaseFragment;
@@ -97,41 +94,6 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static Fragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -150,10 +112,12 @@ public class MainActivity extends BaseActivity {
         public Fragment getItem(int position) {
             if (position == 0) {
                 return BaseFragment.newInstance(DashboardFragment.class);
+            } else if (position == 1) {
+                return BaseFragment.newInstance(FeedbackFragment.class);
             } else if (position == 2) {
                 return BaseFragment.newInstance(EmployeeFragment.class);
             }
-            return PlaceholderFragment.newInstance(position + 1);
+            return null;
         }
 
         @Override
