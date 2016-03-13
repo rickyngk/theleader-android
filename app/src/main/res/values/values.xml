@@ -10,4 +10,6 @@
         <item>@drawable/ic_action_communication</item>
         <item>@drawable/ic_action_business</item>
     </array>
+
+    <string name="theleaderio_weburl">http://theleader.io</string>
 </resources>

@@ -14,6 +14,6 @@ public class LauncherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        pushActivity(LoginActivity.class);
+        openActivity(LoginActivity.class);
     }
 }

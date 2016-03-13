@@ -1,13 +1,16 @@
 package com.theleader.app.activity.main.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.db.chart.Tools;
 import com.db.chart.model.LineSet;
@@ -29,7 +32,7 @@ import butterknife.ButterKnife;
  */
 public class DashboardFragment extends BaseFragment {
     @Bind(R.id.linechart) com.db.chart.view.LineChartView chartView;
-
+    @Bind(R.id.btn_more_detail) Button btnMoreDetail;
 
     private final String[] mLabels= {"JAN", "FEB", "MAR", "APR", "MAY", "JUN"};
     private final float[] mValues = {2.4f, 2.0f, 3.3f, 4.2f, 4.0f, 3.7f};
@@ -67,7 +70,7 @@ public class DashboardFragment extends BaseFragment {
                 .setYLabels(AxisController.LabelPosition.OUTSIDE)
                 .setAxisThickness(Tools.fromDpToPx(0.75f))
                 .setXAxis(true)
-                .setYAxis(true)
+                .setYAxis(false)
                 .setAxisBorderValues(0, 5, 1)
                 .setGrid(ChartView.GridType.VERTICAL, 1, 6, gridPaint)
                 .setValueThreshold(2.5f, 2.5f, thresPaint)
@@ -93,6 +96,16 @@ public class DashboardFragment extends BaseFragment {
         Animation anim = new Animation().setEasing(new ElasticEase()).setEndAction(chartAction);
 
         chartView.show(anim);
+
+
+        //Button more detail
+        btnMoreDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.theleaderio_weburl)));
+                startActivity(browserIntent);
+            }
+        });
 
         return rootView;
     }
