@@ -1,8 +1,10 @@
 package com.theleader.app.activity.main.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.theleader.app.R;
+import com.theleader.app.activity.ContactListActivity;
 import com.theleader.app.activity.main.MainActivity;
 import com.theleader.app.collection.EmployeeCollection;
 import com.theleader.app.entity.EmployeeEntity;
@@ -35,11 +38,24 @@ public class EmployeeFragment extends BaseFragment {
     @Bind(R.id.swipe_container)
     SwipeRefreshLayout swipeLayout;
 
+    @Bind(R.id.btn_add_employee)
+    FloatingActionButton btnAddEmployee;
+
+    public static final int CONTACT_PICKER_RESULT = 1001;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_employee, container, false);
         ButterKnife.bind(this, rootView);
+
+        btnAddEmployee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ContactListActivity.class);
+                getActivity().startActivityForResult(intent, CONTACT_PICKER_RESULT);
+            }
+        });
 
         loadData();
         swipeLayout.setRefreshing(true);
@@ -82,6 +98,10 @@ public class EmployeeFragment extends BaseFragment {
         new LoadDataAsync().execute();
     }
 
+    public void onSelectedContactList(String data) {
+        System.out.println(data);
+    }
+
     public static class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
         Context context;
         public CustomRecyclerViewAdapter(Context context) {
@@ -118,5 +138,4 @@ public class EmployeeFragment extends BaseFragment {
             return EmployeeCollection.getInstance().size();
         }
     }
-
 }

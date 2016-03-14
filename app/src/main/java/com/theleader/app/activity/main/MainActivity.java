@@ -1,6 +1,7 @@
 package com.theleader.app.activity.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,19 +28,13 @@ import R.helper.BaseFragment;
 
 public class MainActivity extends BaseActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    public interface SECTIONS {
+        final static int DASHBOARD = 0;
+        final static int FEEDBACK = 1;
+        final static int EMPLOYEE = 2;
+    }
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -58,16 +54,6 @@ public class MainActivity extends BaseActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
     }
 
 
@@ -101,6 +87,8 @@ public class MainActivity extends BaseActivity {
         String[] sections;
         TypedArray icons;
         Context context;
+        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
         public SectionsPagerAdapter(Context ctx, FragmentManager fm) {
             super(fm);
             context = ctx;
@@ -110,14 +98,22 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return BaseFragment.newInstance(DashboardFragment.class);
-            } else if (position == 1) {
-                return BaseFragment.newInstance(FeedbackFragment.class);
-            } else if (position == 2) {
-                return BaseFragment.newInstance(EmployeeFragment.class);
+            Fragment f = null;
+            switch (position) {
+                case SECTIONS.DASHBOARD:
+                    f = BaseFragment.newInstance(DashboardFragment.class);
+                    break;
+                case SECTIONS.FEEDBACK:
+                    f = BaseFragment.newInstance(FeedbackFragment.class);
+                    break;
+                case SECTIONS.EMPLOYEE:
+                    f = BaseFragment.newInstance(EmployeeFragment.class);
+                    break;
+                default:
+                    break;
             }
-            return null;
+            registeredFragments.append(position, f);
+            return f;
         }
 
         @Override
@@ -134,6 +130,24 @@ public class MainActivity extends BaseActivity {
             ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BASELINE);
             sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             return sb;
+        }
+
+        public BaseFragment getFragment(int position) {
+            return (BaseFragment)registeredFragments.get(position);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case EmployeeFragment.CONTACT_PICKER_RESULT:
+                if (resultCode == RESULT_OK) {
+                    Bundle res = data.getExtras();
+                    String result = res.getString("result");
+                    EmployeeFragment f = (EmployeeFragment) mSectionsPagerAdapter.getFragment(SECTIONS.EMPLOYEE);
+                    f.onSelectedContactList(result);
+                }
+                break;
         }
     }
 }

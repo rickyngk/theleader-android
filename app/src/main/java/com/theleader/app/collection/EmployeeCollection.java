@@ -24,18 +24,13 @@ public class EmployeeCollection extends BaseCollection<EmployeeEntity> {
     public void load(Context ctx, final Callback callback) {
         data = new ArrayList<>();
 
-        EmployeeEntity ee1 = new EmployeeEntity();
-        ee1.setFirstName("Jack");
-        ee1.setLastName("Chan");
-        ee1.setEmail("jackie@email.com");
-        data.add(ee1);
-
-        EmployeeEntity ee2 = new EmployeeEntity();
-        ee2.setFirstName("Mary");
-        ee2.setLastName("Land");
-        ee2.setEmail("marryland@email.com");
-        data.add(ee2);
-
+        for (int i = 0; i < 100; i++) {
+            EmployeeEntity ee1 = new EmployeeEntity();
+            ee1.setFirstName("User");
+            ee1.setLastName((i +  1) + "");
+            ee1.setEmail("user" + i + "@email.com");
+            data.add(ee1);
+        }
         callback.onCompleted(ctx, null);
     }
 }
