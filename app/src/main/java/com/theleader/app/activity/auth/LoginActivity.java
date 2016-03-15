@@ -3,9 +3,12 @@ package com.theleader.app.activity.auth;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,9 +20,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.theleader.app.R;
+import com.theleader.app.RestAPI;
 import com.theleader.app.activity.main.MainActivity;
 
 import R.helper.BaseActivity;
+import R.helper.Callback;
+import R.helper.CallbackResult;
 
 /**
  * A login screen that offers login via email/password.
@@ -32,6 +38,7 @@ public class LoginActivity extends BaseActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,7 @@ public class LoginActivity extends BaseActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.view_holder);
     }
 
     /**
@@ -177,30 +185,42 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
+            RestAPI.login(LoginActivity.this, mEmail, mPassword, new Callback() {
+                @Override
+                public void onCompleted(Context context, final CallbackResult result) {
+                    if (result.hasError()) {
+                        setTimeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAuthTask = null;
+                                showProgress(false);
+                                if (result.getError().is(RestAPI.ELoginError.WRONG_CREDENTIAL)) {
+                                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                                } else {
+                                    Snackbar snackbar = Snackbar.make(coordinatorLayout, getString(R.string.error_something_wrong), Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                }
+                                mPasswordView.requestFocus();
+                            }
+                        });
+                    } else {
+                        setTimeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAuthTask = null;
+                                showProgress(false);
+                                finish();
+                                pushActivity(MainActivity.class);
+                            }
+                        });
+                    }
+                }
+            });
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-                pushActivity(MainActivity.class);
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
         }
 
         @Override
