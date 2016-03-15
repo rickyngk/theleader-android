@@ -50,7 +50,7 @@ public class RestAPI {
     }
     public static Credential auth;
 
-    public final static String ENDPOINT = "http://theleader1.meteor.com/api/1/";
+    public final static String ENDPOINT = "http://theleader1.meteor.com/api/";
     public static void login(Context context, String email, String password, final Callback callbackResult) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("email", email);
