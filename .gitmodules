@@ -1,3 +1,9 @@
 [submodule "android-helper"]
 	path = android-helper
 	url = git@github.com:rickyngk/android-helper.git
+[submodule "volley"]
+	path = volley
+	url = https://android.googlesource.com/platform/frameworks/volley
+[submodule "volley-helper"]
+	path = volley-helper
+	url = git@github.com:rickyngk/volley-helper.git
