@@ -1,10 +1,15 @@
 package com.theleader.app.activity;
 
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +21,18 @@ import com.theleader.app.customview.ContactListItem;
 
 import java.util.ArrayList;
 
-public class ContactListActivity extends AppCompatActivity {
+import R.helper.BaseActivity;
+import R.helper.Callback;
+import R.helper.CallbackResult;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class ContactListActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     ContactListAdapter dataAdapter = null;
+
+    @Bind(R.id.progressBar)
+    View loadingBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,56 +44,55 @@ public class ContactListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishWithResult();
+                finishWithResult(true);
             }
         });
 
-        displayListView();
-    }
+        ButterKnife.bind(this);
 
-    public void finishWithResult() {
-        Bundle conData = new Bundle();
-        ArrayList<ContactInfo> contactList = dataAdapter.getContactList();
-        String delim = "";
-        StringBuilder sb = new StringBuilder();
-        for (ContactInfo c:contactList) {
-            if (c.selected) {
-                sb.append(delim);
-                sb.append(c.getName());
-                sb.append("|");
-                sb.append(c.getName());
-                delim = "\n";
+        loadingBar.setVisibility(View.VISIBLE);
+
+        askForPermission(new String[]{"android.permission.READ_CONTACTS"}, new Callback() {
+            @Override
+            public void onCompleted(Context context, CallbackResult result) {
+                if (result.hasError()) {
+                    finishWithResult(false);
+                } else {
+                    getLoaderManager().initLoader(0, null, ContactListActivity.this);
+                }
             }
-        }
-
-        conData.putString("result", sb.toString());
-        Intent intent = new Intent();
-        intent.putExtras(conData);
-        setResult(RESULT_OK, intent);
-        finish();
+        });
     }
 
-    private void displayListView() {
-        ArrayList<ContactInfo> contactList = new ArrayList<ContactInfo>();
-        ContactInfo contact = new ContactInfo("AFG","Afghanistan",false);
-        contactList.add(contact);
-        contact = new ContactInfo("ALB","Albania",true);
-        contactList.add(contact);
-        contact = new ContactInfo("DZA","Algeria",false);
-        contactList.add(contact);
-        contact = new ContactInfo("ASM","American Samoa",true);
-        contactList.add(contact);
-        contact = new ContactInfo("AND","Andorra",true);
-        contactList.add(contact);
-        contact = new ContactInfo("AGO","Angola",false);
-        contactList.add(contact);
-        contact = new ContactInfo("AIA","Anguilla",false);
-        contactList.add(contact);
+    public void finishWithResult(boolean success) {
+        if (success) {
+            Bundle conData = new Bundle();
+            ArrayList<ContactInfo> contactList = dataAdapter.getContactList();
+            String delim = "";
+            StringBuilder sb = new StringBuilder();
+            for (ContactInfo c : contactList) {
+                if (c.selected) {
+                    sb.append(delim);
+                    sb.append(c.getName());
+                    sb.append("|");
+                    sb.append(c.getEmail());
+                    delim = "\n";
+                }
+            }
 
-        dataAdapter = new ContactListAdapter(this, contactList);
-        ListView listView = (ListView) findViewById(R.id.listView1);
-        listView.setAdapter(dataAdapter);
-
+            conData.putString("result", sb.toString());
+            Intent intent = new Intent();
+            intent.putExtras(conData);
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            Bundle conData = new Bundle();
+            conData.putString("result", "");
+            Intent intent = new Intent();
+            intent.putExtras(conData);
+            setResult(RESULT_CANCELED, intent);
+            finish();
+        }
     }
 
     static class ContactInfo {
@@ -157,4 +171,67 @@ public class ContactListActivity extends AppCompatActivity {
 
     }
 
+
+    //------------------------------------------------------
+    private static final String[] PROJECTION = {
+            ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.LOOKUP_KEY,
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? ContactsContract.Contacts.DISPLAY_NAME_PRIMARY : ContactsContract.Contacts.DISPLAY_NAME,
+    };
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
+        return new CursorLoader(
+                this,
+                ContactsContract.Contacts.CONTENT_URI,
+                PROJECTION,
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        // Put the result Cursor in the adapter for the ListView
+        //mCursorAdapter.swapCursor(cursor);
+
+        ArrayList<ContactInfo> contactList = new ArrayList<ContactInfo>();
+        if (cursor.moveToFirst()){
+            do {
+                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cursor.getString(2);
+                String email = "";
+
+                Cursor emailCur = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[]{id},null);
+                if (emailCur != null) {
+                    if (emailCur.moveToFirst()) {
+                        email = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                    }
+                    emailCur.close();
+                }
+                if (!email.isEmpty()) {
+                    ContactInfo contact = new ContactInfo(name, email, false);
+                    contactList.add(contact);
+                }
+                dataAdapter = new ContactListAdapter(this, contactList);
+                ListView listView = (ListView) findViewById(R.id.listView1);
+                listView.setAdapter(dataAdapter);
+            } while(cursor.moveToNext());
+        }
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                loadingBar.setVisibility(View.GONE);
+            }
+        });
+
+        cursor.close();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // Delete the reference to the existing Cursor
+        //mCursorAdapter.swapCursor(null);
+    }
 }
