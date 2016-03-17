@@ -18,5 +18,5 @@
     <string name="error_something_wrong">Oops. Something went wrong</string>
 
     <string name="dashboard_more_detail">More Detail</string>
-    <string name="title_activity_contact_list">ContactListActivity</string>
+    <string name="title_activity_contact_list">Contacts</string>
 </resources>

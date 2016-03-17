@@ -19,6 +19,7 @@ public class LauncherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
+        hideSystemUI();
         RestAPI.autoLogin(this, new Callback() {
             @Override
             public void onCompleted(Context context, CallbackResult result) {
