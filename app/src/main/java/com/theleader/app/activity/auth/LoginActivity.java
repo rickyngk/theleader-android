@@ -233,5 +233,10 @@ public class LoginActivity extends BaseActivity {
             showProgress(false);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
+    }
 }
 

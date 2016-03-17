@@ -150,4 +150,9 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
+    }
 }
