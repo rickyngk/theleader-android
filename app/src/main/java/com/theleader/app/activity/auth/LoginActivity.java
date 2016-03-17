@@ -214,7 +214,7 @@ public class LoginActivity extends BaseActivity {
                                 mAuthTask = null;
                                 showProgress(false);
                                 finish();
-                                pushActivity(MainActivity.class);
+                                openActivity(MainActivity.class);
                             }
                         });
                     }

@@ -10,11 +10,16 @@ import java.util.HashMap;
 
 import R.helper.Callback;
 import R.helper.CallbackResult;
+import R.helper.CodecX;
+import R.helper.LocalStorage;
 
 /**
  * Created by duynk on 3/15/16.
+
  */
 public class RestAPI {
+    private static String LOCAL_STORAGE_AUTH = "auth_01";
+
     public enum ELoginError implements CallbackResult.ICallbackError {
         ANY(-1),
         WRONG_CREDENTIAL (10003)
@@ -51,7 +56,24 @@ public class RestAPI {
     public static Credential auth;
 
     public final static String ENDPOINT = "http://theleader1.meteor.com/api/";
-    public static void login(Context context, String email, String password, final Callback callbackResult) {
+
+    public static void autoLogin(Context context, final Callback callback) {
+        String lastAccount = LocalStorage.getString(RestAPI.LOCAL_STORAGE_AUTH, "");
+        if (!lastAccount.isEmpty()) {
+            try {
+                String[] t = lastAccount.split("\\|");
+                String email = t[0];
+                String password = CodecX.decode(t[1]);
+                login(context, email, password, callback);
+            } catch (Exception E) {
+                callback.onCompleted(context, CallbackResult.error());
+            }
+        } else {
+            callback.onCompleted(context, CallbackResult.error());
+        }
+    }
+
+    public static void login(Context context, final String email, final String password, final Callback callback) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("email", email);
         data.put("password", password);
@@ -59,7 +81,7 @@ public class RestAPI {
             @Override
             public void onCompleted(Context context, CallbackResult result) {
                 if (result.hasError()) {
-                    callbackResult.onCompleted(context, CallbackResult.error(ELoginError.ANY));
+                    callback.onCompleted(context, CallbackResult.error(ELoginError.ANY));
                 } else {
                     try {
                         JSONObject re = (JSONObject) result.getData();
@@ -69,14 +91,17 @@ public class RestAPI {
                                 JSONObject payload = re.getJSONObject("payload");
                                 auth.userId = payload.getString("userId");
                                 auth.token = payload.getString("token");
-                                callbackResult.onCompleted(context, CallbackResult.success());
+
+                                LocalStorage.set(RestAPI.LOCAL_STORAGE_AUTH, email + "|" + CodecX.encode(password));
+
+                                callback.onCompleted(context, CallbackResult.success());
                             } else {
-                                callbackResult.onCompleted(context, CallbackResult.error(ELoginError.WRONG_CREDENTIAL));
+                                callback.onCompleted(context, CallbackResult.error(ELoginError.WRONG_CREDENTIAL));
                             }
 
 
                     } catch (Exception E) {
-                        callbackResult.onCompleted(context, CallbackResult.error(ELoginError.ANY));
+                        callback.onCompleted(context, CallbackResult.error(ELoginError.ANY));
                     }
                 }
             }
