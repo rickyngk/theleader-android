@@ -29,10 +29,10 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/base_padding_4x"
-            android:paddingLeft="@dimen/base_padding_4x"
-            android:paddingRight="@dimen/base_padding_4x"
-            android:paddingTop="@dimen/base_padding_4x">
+            android:paddingBottom="@dimen/pad_x2"
+            android:paddingLeft="@dimen/pad_x2"
+            android:paddingRight="@dimen/pad_x2"
+            android:paddingTop="@dimen/pad_x2">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

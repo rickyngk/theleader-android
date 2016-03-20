@@ -2,34 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="6dip">
-
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:clickable="false" />
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/pad_x2"
+        android:paddingBottom="@dimen/pad_x2"
+        android:paddingLeft="@dimen/pad_x2"
+        android:paddingRight="@dimen/pad_x2">
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:gravity="top|left" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Text.Medium" />
+            android:layout_marginLeft="@dimen/pad_x2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/textView2"
-            style="@style/Text.Small" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Text.Medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/textView2"
+                style="@style/Text.Small" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

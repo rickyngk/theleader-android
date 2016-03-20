@@ -7,23 +7,24 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/base_padding_4x"
-        android:paddingBottom="@dimen/base_padding_4x">
+        android:paddingTop="@dimen/pad_x2"
+        android:paddingBottom="@dimen/pad_x2"
+        android:layout_marginLeft="@dimen/pad_x2"
+        android:layout_marginRight="@dimen/pad_x2">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/img_avatar"
             android:contentDescription="@null"
-            android:layout_marginLeft="@dimen/base_padding_2x"
-            android:layout_marginRight="@dimen/base_padding_2x"
             android:src="@drawable/ic_action_black_user_shape" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/pad_x2">
 
             <TextView
                 android:layout_width="wrap_content"

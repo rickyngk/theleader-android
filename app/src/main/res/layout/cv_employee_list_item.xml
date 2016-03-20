@@ -4,24 +4,24 @@
     android:layout_height="wrap_content">
     <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/base_padding_4x"
-        android:paddingBottom="@dimen/base_padding_4x">
+        android:paddingTop="@dimen/pad_x2"
+        android:paddingBottom="@dimen/pad_x2"
+        android:paddingLeft="@dimen/pad_x2"
+        android:paddingRight="@dimen/pad_x2">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/imageView"
             android:src="@drawable/ic_action_black_user_shape"
-            android:contentDescription="@null"
-            android:layout_marginLeft="@dimen/base_padding_4x"
-            android:layout_marginRight="@dimen/base_padding_4x" />
+            android:contentDescription="@null" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/base_padding">
+            android:layout_marginLeft="@dimen/pad_x2">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                 android:text="Small Text"
                 android:id="@+id/txt_phone"
                 style="@style/Text.Small.Muted"
-                android:layout_marginTop="@dimen/base_padding" />
+                android:layout_marginTop="@dimen/pad_h" />
 
 
         </LinearLayout>
