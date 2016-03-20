@@ -52,6 +52,4 @@
         android:text="@string/dashboard_more_detail"
         android:id="@+id/btn_more_detail"
         android:layout_gravity="right" />
-
-
 </LinearLayout>

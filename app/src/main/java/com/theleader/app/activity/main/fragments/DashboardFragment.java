@@ -24,6 +24,7 @@ import com.theleader.app.R;
 import java.text.DecimalFormat;
 
 import R.helper.BaseFragment;
+import R.helper.Common;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -106,6 +107,7 @@ public class DashboardFragment extends BaseFragment {
                 startActivity(browserIntent);
             }
         });
+        Common.setButtonColorRes(getContext(), btnMoreDetail, R.color.colorAccent, R.color.textColorLight);
 
         return rootView;
     }
