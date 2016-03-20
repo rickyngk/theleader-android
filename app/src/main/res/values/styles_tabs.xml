@@ -2,14 +2,14 @@
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
         <item name="android:background">#ffffff</item>
-        <item name="tabSelectedTextColor">@color/textColorDark</item>
-        <item name="android:theme">@style/Text.Small.Muted</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+        <!--<item name="android:theme">@style/Text.Small.Muted</item>-->
     </style>
 
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textColor">@color/textColorDark</item>
-        <item name="android:textSize">@dimen/font_xxs</item>
+        <!--<item name="android:textSize">@dimen/font_xxs</item>-->
     </style>
 
 </resources>
