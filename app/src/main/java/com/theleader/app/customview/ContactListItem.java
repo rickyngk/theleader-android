@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.theleader.app.R;
 
-import R.helper.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -60,27 +59,17 @@ public class ContactListItem extends RelativeLayout {
     }
 
     public void setData(final String name, final String email, final boolean checked) {
-        BaseActivity.timeout(new Runnable() {
-            @Override
-            public void run() {
-                checkBox.setChecked(checked);
-                if (name.isEmpty()) {
-                    textView.setText(email);
-                    textView2.setVisibility(GONE);
-                } else {
-                    textView.setText(name);
-                    textView2.setText(email);
-                }
-            }
-        });
+        checkBox.setChecked(checked);
+        if (name.isEmpty()) {
+            textView.setText(email);
+            textView2.setVisibility(GONE);
+        } else {
+            textView.setText(name);
+            textView2.setText(email);
+        }
     }
 
     public void setSelected(final boolean checked) {
-        BaseActivity.timeout(new Runnable() {
-            @Override
-            public void run() {
-                checkBox.setChecked(checked);
-            }
-        });
+        checkBox.setChecked(checked);
     }
 }

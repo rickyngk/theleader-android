@@ -145,7 +145,9 @@ public class MainActivity extends BaseActivity {
                     Bundle res = data.getExtras();
                     String result = res.getString("result");
                     EmployeeFragment f = (EmployeeFragment) mSectionsPagerAdapter.getFragment(SECTIONS.EMPLOYEE);
-                    f.onSelectedContactList(result);
+                    if (f != null) {
+                        f.onSelectedContactList(result);
+                    }
                 }
                 break;
         }
