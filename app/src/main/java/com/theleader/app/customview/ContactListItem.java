@@ -24,6 +24,9 @@ public class ContactListItem extends RelativeLayout {
     @Bind(R.id.textView)
     TextView textView;
 
+    @Bind(R.id.textView2)
+    TextView textView2;
+
     boolean hasInit = false;
 
     public ContactListItem(Context context) {
@@ -63,8 +66,10 @@ public class ContactListItem extends RelativeLayout {
                 checkBox.setChecked(checked);
                 if (name.isEmpty()) {
                     textView.setText(email);
+                    textView2.setVisibility(GONE);
                 } else {
-                    textView.setText(name + " (" + email + ")");
+                    textView.setText(name);
+                    textView2.setText(email);
                 }
             }
         });
