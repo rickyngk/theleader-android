@@ -20,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.theleader.app.R;
@@ -43,6 +44,9 @@ public class ContactListActivity extends BaseActivity implements LoaderManager.L
 
     @Bind(R.id.search)
     EditText searchText;
+
+    @Bind(R.id.btn_clear)
+    ImageButton btnClear;
 
     Timer textChangedTimer;
 
@@ -101,7 +105,19 @@ public class ContactListActivity extends BaseActivity implements LoaderManager.L
                             }
                         });
                     }
-                }, 1000);
+                }, 500);
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactListActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        searchText.setText("");
+                    }
+                });
             }
         });
 
@@ -267,7 +283,7 @@ public class ContactListActivity extends BaseActivity implements LoaderManager.L
                             ContactInfo c = contactList.get(i);
                             String name = c.getName();
                             String email = c.getEmail();
-                            if (name.toLowerCase().startsWith(constraint.toString()) || email.toLowerCase().startsWith(constraint.toString())) {
+                            if (name.toLowerCase().contains(constraint.toString()) || email.toLowerCase().contains(constraint.toString())) {
                                 filtered.add(c);
                             }
                         }

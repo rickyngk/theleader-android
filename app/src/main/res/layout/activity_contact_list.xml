@@ -20,7 +20,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
         </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -35,8 +35,21 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                style="@style/Text.Medium.Light" />
-        </LinearLayout>
+                style="@style/Text.Medium.Light"
+                android:paddingRight="45dp" />
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/btn_clear"
+                android:src="@drawable/ic_action_cross"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:scaleType="centerInside"
+                android:paddingBottom="5dp" />
+        </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_contact_list" />
