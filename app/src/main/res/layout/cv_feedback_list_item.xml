@@ -13,11 +13,11 @@
         android:layout_marginRight="@dimen/pad_x2">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/img_avatar"
             android:contentDescription="@null"
-            android:src="@drawable/ic_action_black_user_shape" />
+            android:src="@drawable/ic_round_avatar" />
 
         <LinearLayout
             android:orientation="vertical"
