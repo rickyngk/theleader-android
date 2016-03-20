@@ -10,6 +10,6 @@ public class MyApp extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        setDefaultFont(FontType.SERIF, "fonts/RobotoSlab-Regular.ttf");
+        setDefaultFont(FontType.SERIF, "fonts/NotoSans-Regular.ttf");
     }
 }
